@@ -1,8 +1,8 @@
 import "./App.css";
 import Todo from "./Components/Todo";
-
 import React, { Component } from "react";
 import TodoForm from "./Components/TodoForm";
+import PopUp from "./Components/PopUp";
 
 export default class App extends Component {
   constructor(props) {
@@ -14,6 +14,13 @@ export default class App extends Component {
         { id: 2, name: "Second Todo", completed: false },
         { id: 3, name: "Third Todo", completed: false },
       ],
+      popup: {
+        task: "",
+        triggered: false,
+        text: "",
+        ok: false,
+        id: null,
+      },
     };
   }
 
@@ -30,17 +37,36 @@ export default class App extends Component {
     this.setState({ todos: todoList });
   };
 
-  deleteTodo = (id) => {
-    console.log(id);
-    let todoList = [...this.state.todos];
-    const index = todoList.findIndex((todo) => todo.id === id);
-    todoList.splice(index, 1);
-    this.setState({ todos: todoList });
+  requestDeleteTodo = (id, popup) => {
+    let pop = { ...this.state.popup };
+    pop.text = `${popup.text} of task id ${id}`;
+    pop.triggered = !this.state.popup.triggered;
+    pop.task = "delete";
+    pop.id = id;
+    this.setState({ popup: pop });
+  };
+  popupResponse = (val) => {
+    if (val === "yes" && this.state.popup.task === "delete") {
+      let todoList = [...this.state.todos];
+      const index = todoList.findIndex(
+        (todo) => todo.id === this.state.popup.id
+      );
+      todoList.splice(index, 1);
+      this.setState({ todos: todoList });
+    }
+    let pop = { ...this.state.popup };
+    pop.triggered = !this.state.popup.triggered;
+    this.setState({ popup: pop });
   };
 
   render() {
     return (
       <div className="App">
+        <PopUp
+          triggered={this.state.popup.triggered}
+          text={this.state.popup.text}
+          popupResponse={this.popupResponse}
+        />
         <div className="developer">
           <span>Developer</span>
           <br />
@@ -53,7 +79,7 @@ export default class App extends Component {
               key={todo.id}
               todo={todo}
               completeTodo={this.completeTodo}
-              deleteTodo={this.deleteTodo}
+              deleteTodo={this.requestDeleteTodo}
             />
           ))}
         </div>
