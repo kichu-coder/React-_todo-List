@@ -6,7 +6,9 @@ export default class Todo extends Component {
   };
 
   deleteTodo = (id) => {
-    this.props.deleteTodo(id);
+    this.props.deleteTodo(id, {
+      text: "Are you sure you want to delete this todo task",
+    });
   };
   render() {
     return (
