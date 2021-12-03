@@ -1,0 +1,13 @@
+.todoform {
+  display: flex;
+  justify-content: center;
+  /* flex-direction: column; */
+}
+.todoform input {
+  outline: none;
+  width: 98%;
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+}

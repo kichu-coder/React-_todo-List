@@ -1,0 +1,30 @@
+.todo {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.todo p {
+  width: 89%;
+}
+
+.status button {
+  margin: 2px;
+  border-radius: 100px;
+  outline: none;
+  border: 1px solid grey;
+}
+
+.completed {
+  background-color: rgb(6, 250, 38);
+  color: white;
+}
+
+.remove {
+  background-color: rgba(238, 15, 15, 0.884);
+  color: white;
+}
